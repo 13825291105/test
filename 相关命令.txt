@@ -1,0 +1,143 @@
+/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf restart
+
+
+/usr/bin/fdfs_storaged /etc/fdfs/storage.conf restart
+
+systemctl stop firewalld.service
+
+注：如果你也是在阿里云上进行配置，storaged可能会启动失败，因为你可能没有配置云服务器实例安全组，请添加安全组配置，打开22122和23000端口（省事的话也可以直接配打开1/65535 把所有端口都打开，如果你的服务器不是很怕攻击的话）
+
+
+
+netstat -unltp | grep tracker
+
+netstat -unltp | grep storage
+
+
+
+
+
+/etc/init.d/fdfs_trackerd start 
+
+
+
+
+/etc/init.d/fdfs_storaged start 
+
+
+
+
+cd /fastdfs/storage/ && ll 
+
+
+
+ps -ef | grep fdfs  
+
+
+
+
+mvn install -DskipTests 打包命令  不测试 
+
+
+
+
+
+
+
+
+
+
+
+Linux 运行jar包命令如下：
+
+方式一：
+
+    java -jar shareniu.jar
+
+特点：当前ssh窗口被锁定，可按CTRL + C打断程序运行，或直接关闭窗口，程序退出
+
+那如何让窗口不锁定？
+
+方式二
+
+    java -jar shareniu.jar &
+
+&代表在后台运行。
+
+特定：当前ssh窗口不被锁定，但是当窗口关闭时，程序中止运行。
+
+继续改进，如何让窗口关闭时，程序仍然运行？
+
+方式三
+
+nohup java -jar shareniu.jar &
+
+nohup 意思是不挂断运行命令,当账户退出或终端关闭时,程序仍然运行
+
+当用 nohup 命令执行作业时，缺省情况下该作业的所有输出被重定向到nohup.out的文件中，除非另外指定了输出文件。
+
+方式四
+
+    nohup java -jar shareniu.jar >temp.txt &
+
+解释下 >temp.txt
+
+command >out.file
+
+command >out.file是将command的输出重定向到out.file文件，即输出内容不打印到屏幕上，而是输出到out.file文件中。
+
+可通过jobs命令查看后台运行任务
+
+    jobs
+
+那么就会列出所有后台执行的作业，并且每个作业前面都有个编号。
+如果想将某个作业调回前台控制，只需要 fg + 编号即可。
+
+    fg 23
+
+查看某端口占用的线程的pid
+
+netstat -nlp |grep :9181
+
+
+
+ 
+//关闭进程
+ps -aux | grep java
+kill -s 9 24204
+ 
+24204代表上一步查出的进程ID
+
+
+netstat -nlp |grep :8080
+
+
+
+重启mysql
+systemctl restart  mysqld.service
+
+配置文件路径 /etc/my.in
+
+
+
+命令：systemctl start mysqld
+命令：systemctl status mysqld
+
+
+7. 设置mysql为系统服务，随系统启动而启动
+命令：systemctl enable mysqld
+命令：systemctl daemon-reload
+
+
+9. 修改配置文件
+9.1. 默认配置文件路径
+配置文件：/etc/my.cnf
+日志文件：/var/log//var/log/mysqld.log
+服务启动脚本：/usr/lib/systemd/system/mysqld.service
+socket文件：/var/run/mysqld/mysqld.pid
+
+
+
+
+
+
